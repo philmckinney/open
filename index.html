@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Open in Obsidian</title>
+<style>
+  body { font-family: -apple-system, system-ui, sans-serif; max-width: 32rem; margin: 3rem auto; padding: 0 1rem; text-align: center; color: #222; }
+  a.btn { display: inline-block; margin-top: 1rem; padding: 0.8rem 1.4rem; background: #7c3aed; color: #fff; border-radius: 8px; text-decoration: none; font-size: 1.1rem; }
+  .path { color: #666; font-size: 0.9rem; word-break: break-all; }
+</style>
+</head>
+<body>
+<p id="msg">Opening in Obsidian…</p>
+<p class="path" id="path"></p>
+<a class="btn" id="btn" href="#">Open in Obsidian</a>
+<script>
+  // Opens a note in Phil's vault. Only paths inside Wiki/ are allowed.
+  var VAULT = "philmckinney-sync";
+  var f = new URLSearchParams(location.search).get("f") || "";
+  f = f.replace(/\.md$/i, "");
+  var ok = /^Wiki\//.test(f) && f.indexOf("..") === -1;
+  if (!ok) {
+    document.getElementById("msg").textContent = "No Wiki page given.";
+    document.getElementById("btn").style.display = "none";
+  } else {
+    var uri = "obsidian://open?vault=" + encodeURIComponent(VAULT) + "&file=" + encodeURIComponent(f);
+    document.getElementById("path").textContent = f;
+    document.getElementById("btn").href = uri;
+    location.href = uri;
+  }
+</script>
+</body>
+</html>
